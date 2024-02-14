@@ -4,7 +4,7 @@ function out = MonteCarloFast(distFn,N,varargin)
 % density function specified by distFn. This function is **not** capable of
 % generating correlated random variables. Faster, similar implementation  
 % of sim.iid.MonteCarloSim(), which was done to demonstrate knowledge of
-% the method.
+% the method for ATOC 5235.
 % 
 % Inputs:
 %       distFn: A structure with fields
@@ -12,7 +12,7 @@ function out = MonteCarloFast(distFn,N,varargin)
 %               y: y coordinates of the distribution function.
 %       N: The number of random variables to simulate
 %       varargin{1}: flag 'pdf' or 'cdf' for the type of distribution
-%       function input. 
+%       function input. Default is 'cdf'
 % Outputs:
 %       out: Struct with fields
 %           result: 1xN vector containing simulated RVs with the desired

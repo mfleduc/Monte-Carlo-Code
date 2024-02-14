@@ -15,7 +15,7 @@ function out = MonteCarloSim(distFn,N,varargin)
 %               identically zero, the bounds of the random variable.
 %       N: The number of random variables to simulate
 %       varargin{1}: flag 'pdf' or 'cdf' for the type of distribution
-%       function input. 
+%       function input. Default is 'cdf'
 % Outputs:
 %       out: Struct with fields
 %           result: 1xN vector containing simulated RVs with the desired
