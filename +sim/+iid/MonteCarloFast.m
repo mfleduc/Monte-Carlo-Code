@@ -38,6 +38,6 @@ end
 newDist = makedist('PieceWiselinear','x',distFn.x, 'Fx', cdf); 
 out.result = random(newDist, 1, N);
 
-out.errCode = 0';
+out.errCode = 0;
 end
 
