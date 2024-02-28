@@ -31,8 +31,10 @@ switch distFlag %Making sure we have a CDF
     case 'pdf'
         denom = trapz( distFn.x, distFn.y ) ;
         cdf = cumtrapz(distFn.x,distFn.y)/denom;
+        cdf(end)=1; 
     case 'cdf'
         cdf = distFn.y/distFn.y(end);
+        
 end
 
 newDist = makedist('PieceWiselinear','x',distFn.x, 'Fx', cdf); 
