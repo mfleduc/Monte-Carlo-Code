@@ -12,7 +12,13 @@ function out = MonteCarloFast(distFn,N,varargin)
 %               y: y coordinates of the distribution function.
 %       N: The number of random variables to simulate
 %       varargin{1}: flag 'pdf' or 'cdf' for the type of distribution
-%       function input. Default is 'cdf'
+%       function input, or the name of a distribution natively available in MATLAB.
+%       Default is 'cdf'.
+%       If you name a distribution, the next arguments to varargin must be
+%       the necessary parameters to simulate the random variable. See the
+%       MATLAB documentation for details. To use this, pass in
+%       struct.empty() for distFn, or whatever you want, it'll get ignored
+%       anyway
 % Outputs:
 %       out: Struct with fields
 %           result: 1xN vector containing simulated RVs with the desired
@@ -32,14 +38,26 @@ switch distFlag %Making sure we have a CDF
         denom = trapz( distFn.x, distFn.y ) ;
         cdf = cumtrapz(distFn.x,distFn.y)/denom;
         cdf(end)=1; 
+        newDist = makedist('PieceWiselinear','x',distFn.x, 'Fx', cdf); 
+        out.result = random(newDist, 1, N);
+
+        out.errCode = 0';
     case 'cdf'
         cdf = distFn.y/distFn.y(end);
-        
+        newDist = makedist('PieceWiselinear','x',distFn.x, 'Fx', cdf); 
+        out.result = random(newDist, 1, N);
+
+        out.errCode = 0';
+    otherwise %Let the user pass in MATLAB specific stuff if they want to
+        evalStr = 'random(varargin{1}';
+        for kk = 2:length(varargin)
+            evalStr = [evalStr,sprintf(',varargin{%d}',kk)] ;
+        end
+        evalStr = [evalStr,',[1,N]);'];
+        out.result = eval(evalStr);
+       
 end
 
-newDist = makedist('PieceWiselinear','x',distFn.x, 'Fx', cdf); 
-out.result = random(newDist, 1, N);
 
-out.errCode = 0';
 end
 
