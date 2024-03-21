@@ -59,5 +59,7 @@ switch distFlag %Making sure we have a CDF
 end
 
 
+out.errCode = 0;
+
 end
 
